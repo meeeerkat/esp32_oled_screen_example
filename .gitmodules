@@ -1,3 +1,6 @@
 [submodule "components/oled_screen"]
 	path = components/oled_screen
 	url = git@github.com:meeeerkat/esp32_oled_screen.git
+[submodule "main/img_buffer"]
+	path = main/img_buffer
+	url = git@github.com:meeeerkat/img_buffer.git
