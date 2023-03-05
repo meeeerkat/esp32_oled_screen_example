@@ -2,11 +2,7 @@
 #include "esp_log.h"
 #include "nvs_flash.h"
 #include "oled_screen.h"
-#include "freertos/FreeRTOS.h"
-#include "freertos/task.h"
-#include "freertos/queue.h"
-#include "freertos/timers.h"
-#include "driver/gpio.h"
+#include <string.h>
 
 
 #define SDA_GPIO 33
@@ -14,45 +10,16 @@
 
 
 oled_screen_t os;
-uint8_t buff[OLED_SCREEN_128x32_BUFF_SIZE] = {
-  0b11111111,
-  0b11111111,
-  0b11111111,
-  0b11111111,
-  0b11111111,
-  0b11111111,
-  0b11111111,
-  0b11111111,
-  0b11111111,
-  0b11111111,
-  0b11111111,
-  0b11111111,
-  0b11111111,
-  0b11111111,
-  0b11111111,
-  0b11111111,
-  0b11111111,
-  0b11111111,
-  0b11111111,
-  0b11111111,
-  0b11111111,
-  0b11111111,
-  0b11111111,
-  0b11111111,
-  0b11111111,
-  0b11111111,
-  0b11111111,
-  0b11111111,
-  0b11111111,
-  0b11111111,
-  0b11111111,
-  0b11111111
-};
+uint8_t buff[OLED_SCREEN_128x32_BUFF_SIZE];
 
 
 void app_main(void) {
+  memset(buff, 0x7F, OLED_SCREEN_128x32_BUFF_SIZE);
+
   oled_screen__init(&os, SDA_GPIO, SCL_GPIO, I2C_NUM_0, RES_128x32);
 
+  buff[4] = 0;
+  buff[30] = 0;
   oled_screen__write(&os, buff);
 
   vTaskDelay(pdMS_TO_TICKS(100000));
