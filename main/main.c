@@ -35,6 +35,11 @@ void app_main(void) {
   
   vTaskDelay(pdMS_TO_TICKS(3000));
 
+  img_buffer__draw_char(&ib, 75, 5, 1, 'b');
+  oled_screen__write(&os, img_buffer__get_buff(&ib));
+
+  vTaskDelay(pdMS_TO_TICKS(3000));
+
   oled_screen__off(&os);
 
 
