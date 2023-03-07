@@ -40,6 +40,12 @@ void app_main(void) {
 
   vTaskDelay(pdMS_TO_TICKS(3000));
 
+  char string[] = "abcdefg";
+  img_buffer__draw_string(&ib, 0, 0, 1, string, sizeof(string));
+  oled_screen__write(&os, img_buffer__get_buff(&ib));
+
+  vTaskDelay(pdMS_TO_TICKS(3000));
+
   oled_screen__off(&os);
 
 
