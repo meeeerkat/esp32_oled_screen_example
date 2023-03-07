@@ -45,7 +45,8 @@ void string_tests() {
 
 void progress_bar_tests() {
   img_buffer_progress_bar_t pb;
-  img_buffer_progress_bar__init(&pb, 16, 20, 112, 8, 1);
+  img_buffer_progress_bar__init(&pb, 8, 20, 127-8-4*8, 8, 1);
+  img_buffer_progress_bar__setup_external_value_display(&ib, &pb, 127-4*8, 20);
 
   for (uint8_t percent=1; percent < 100; percent++) {
     img_buffer_progress_bar__update_percent(&ib, &pb, percent);
@@ -53,6 +54,21 @@ void progress_bar_tests() {
     vTaskDelay(pdMS_TO_TICKS(50));
   }
   
+  vTaskDelay(pdMS_TO_TICKS(1000));
+  
+  img_buffer_progress_bar__reset(&ib, &pb);
+  oled_screen__write(&os, img_buffer__get_buff(&ib));
+
+  vTaskDelay(pdMS_TO_TICKS(1000));
+
+  img_buffer_progress_bar__clear(&ib, &pb);
+  oled_screen__write(&os, img_buffer__get_buff(&ib));
+
+  vTaskDelay(pdMS_TO_TICKS(1000));
+
+  img_buffer_progress_bar__update_percent(&ib, &pb, 20);
+  oled_screen__write(&os, img_buffer__get_buff(&ib));
+
   vTaskDelay(pdMS_TO_TICKS(1000));
 }
 
